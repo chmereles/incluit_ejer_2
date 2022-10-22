@@ -130,7 +130,7 @@ contract Consorcio is Ownable {
      * @param _index El indice del array `_employees`.
      * @param _amount La cantidad a pagar.
      */
-    function payEmployee(uint256 _index, uint256 _amount)
+    function payEmployeeByIndex(uint256 _index, uint256 _amount)
         public
         onlyOwner
         isAmountAndBalaceOk(_amount)
@@ -198,6 +198,11 @@ contract Consorcio is Ownable {
         _services.push(new Service(TypeOfService.Otros));
     }
 
+    /**
+     * @dev Obtener un servicio agregado en `_services`.
+     * 
+     * Funcion auxiliar para pruebas unitarias
+     */
     function getService(uint _serviceIndex) public view returns(Service) {
         return _services[_serviceIndex];
     }

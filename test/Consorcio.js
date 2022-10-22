@@ -44,9 +44,11 @@ describe("Consorcio contract", function () {
     });
   })
 
-  describe("payEmployee", function () {
+  describe("payEmployeeByIndex", function () {
     let Empleado;
     let empleado;
+    let validEmployee = 0;
+    let invalidEmployee = 100;
 
     beforeEach(async function () {
       Empleado = await ethers.getContractFactory("Employee");
@@ -55,7 +57,7 @@ describe("Consorcio contract", function () {
 
     it("deberia pagar a un empleado y el balance del empleado incrementarse en el valor pagado", async function () {
       await consorcioBalance.addEmployeeUser(empleado.address);
-      await expect(consorcioBalance.payEmployee(0, 1))
+      await expect(consorcioBalance.payEmployeeByIndex(validEmployee, 1))
         .to.changeEtherBalances(
           [consorcioBalance, empleado],
           [-1, 1]
@@ -64,7 +66,7 @@ describe("Consorcio contract", function () {
 
     it("deberia revertir la transaccion si el empleado no esta cargado", async function () {
       await consorcioBalance.addEmployeeUser(empleado.address);
-      await expect(consorcioBalance.payEmployee(1, 2))
+      await expect(consorcioBalance.payEmployeeByIndex(invalidEmployee, 1))
         .to.be.revertedWith("Consorcio: El empleado no existe");
     });
   })
